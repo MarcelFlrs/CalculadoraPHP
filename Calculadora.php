@@ -35,6 +35,10 @@ function limparHistorico(){
     unset($_SESSION["historico"]);
 }
 
+function salvarNaMemoria($num1, $num2, $op){
+    $_SESSION["memoria"] = array($num1, $num2, $op);
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "GET"){
     if (isset($_GET["calcular"])) {
         $num1 = $_GET['num1'];
@@ -78,13 +82,12 @@ $historico = isset($_SESSION["historico"]) ? $_SESSION["historico"] : array();
                 <div class="mb-3 d-flex align-items-center">
                 <input type="text" aria-label="num1" class="form-control rounded-end me-2" name="num1" placeholder="Número 1" >
                     <select class="form-select me-2" aria-label="Default select example" name="op">
-                         <option selected></option>
+                        <option value="" disabled selected>Escolha uma operação</option>
                         <option value="+" <?= isset($_GET['op']) && $_GET['op'] == '+' ? 'selected' : '' ?>>+</option>
                         <option value="-" <?= isset($_GET['op']) && $_GET['op'] == '-' ? 'selected' : '' ?>>-</option>
                         <option value="*" <?= isset($_GET['op']) && $_GET['op'] == '*' ? 'selected' : '' ?>>*</option>
                         <option value="/" <?= isset($_GET['op']) && $_GET['op'] == '/' ? 'selected' : '' ?>>/</option>
                         <option value="^" <?= isset($_GET['op']) && $_GET['op'] == '^' ? 'selected' : '' ?>>^</option>
-                        <option value="!" <?= isset($_GET['op']) && $_GET['op'] == '!' ? 'selected' : '' ?>>!</option>
                     </select>
                     <input type="text" class="form-control me-2" id="num2" name="num2" placeholder="Número 2" value="<?= isset($num2) ? $num2 : '' ?>">
                     <button type="submit" class="btn btn-primary" name="calcular">Calcular</button>
